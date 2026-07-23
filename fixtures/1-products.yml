@@ -1,0 +1,128 @@
+entity: Product
+
+items:
+  product_mouse:
+    name: 'Mouse óptico inalámbrico'
+    description: 'Mouse inalámbrico 2.4GHz, sensor óptico 1600 DPI, batería recargable.'
+    priceClp: 9990
+    imageUrl: 'https://res.cloudinary.com/djx6viedj/image/upload/t_trimmed_square_1024/e718nybmfikj7onzlrllt188djpl?_a=BACCd2Ev'
+    stockTotal: 25
+    stockReserved: 0
+    isSeed: true
+
+  product_teclado:
+    name: 'Teclado mecánico compacto'
+    description: 'Teclado mecánico 60%, switches rojos, retroiluminado RGB.'
+    priceClp: 34990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_905815-MLA99499972112_112025-F.webp'
+    stockTotal: 15
+    stockReserved: 0
+    isSeed: true
+
+  product_audifonos:
+    name: 'Audífonos over-ear con cancelación de ruido'
+    description: 'Audífonos inalámbricos Bluetooth 5.3 con ANC y 30h de batería.'
+    priceClp: 49990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_784108-MLA97407980360_112025-F.webp'
+    stockTotal: 20
+    stockReserved: 0
+    isSeed: true
+
+  product_webcam:
+    name: 'Webcam Full HD 1080p'
+    description: 'Webcam USB con autofocus y micrófono integrado con cancelación de ruido.'
+    priceClp: 24990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_820483-MLA99454380622_112025-F.webp'
+    stockTotal: 12
+    stockReserved: 0
+    isSeed: true
+
+  product_hub:
+    name: 'Hub USB-C 7 en 1'
+    description: 'HDMI 4K, 3x USB 3.0, lector SD/microSD, carga PD 100W.'
+    priceClp: 19990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_838088-MLA99872636029_112025-F.webp'
+    stockTotal: 30
+    stockReserved: 0
+    isSeed: true
+
+  product_soporte:
+    name: 'Soporte de notebook ajustable'
+    description: 'Soporte de aluminio, ajustable en altura y ángulo, plegable.'
+    priceClp: 14990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_893406-MLC95494726597_102025-F-soporte-escritorio-aluminio-ajustable-plegable-tablet-y-ipad.webp'
+    stockTotal: 18
+    stockReserved: 0
+    isSeed: true
+
+  product_powerbank:
+    name: 'Power bank 20000mAh'
+    description: 'Batería portátil con carga rápida PD 20W, 2 puertos USB-A + USB-C.'
+    priceClp: 22990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_802065-MLA99904929559_112025-F.webp'
+    stockTotal: 20
+    stockReserved: 0
+    isSeed: true
+
+  product_mousepad:
+    name: 'Mousepad XL para escritorio'
+    description: 'Mousepad de tela 90x40cm, base antideslizante, bordes cosidos.'
+    priceClp: 7990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_708843-MLA113418225393_062026-F.webp'
+    stockTotal: 1
+    stockReserved: 0
+    isSeed: true
+
+  product_monitor:
+    name: 'Monitor 27" 4K IPS'
+    description: 'Panel IPS 3840x2160, 99% sRGB, entradas HDMI 2.1 y DisplayPort.'
+    priceClp: 289990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_883435-MLA99943522251_112025-F.webp'
+    stockTotal: 40
+    stockReserved: 0
+    isSeed: true
+
+  product_terminal_pos:
+    name: 'Terminal POS inalámbrico'
+    description: 'Terminal de cobro portátil, lector de banda/chip/contactless, WiFi + 4G.'
+    priceClp: 149990
+    imageUrl: 'https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/Smart_desktop_precio_promocional--335f0ce0.png'
+    stockTotal: 10
+    stockReserved: 0
+    isSeed: true
+
+  product_ssd:
+    name: 'SSD externo 1TB NVMe'
+    description: 'Disco sólido portátil USB-C 3.2, hasta 1050MB/s, resistente a caídas.'
+    priceClp: 79990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_845115-MLA100021755877_122025-F.webp'
+    stockTotal: 2
+    stockReserved: 0
+    isSeed: true
+
+  product_cargador:
+    name: 'Cargador GaN 65W'
+    description: 'Cargador USB-C compacto de tecnología GaN, carga simultánea de 3 dispositivos.'
+    priceClp: 17990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_813120-MLC114354280651_072026-F-cargador-tipo-c-para-samsung-ultra-carga-rapida-65wcable.webp'
+    stockTotal: 50
+    stockReserved: 0
+    isSeed: true
+
+  product_escaner:
+    name: 'Escáner de código de barras USB'
+    description: 'Lector láser 1D/2D para punto de venta, plug-and-play, base incluida.'
+    priceClp: 39990
+    imageUrl: 'https://http2.mlstatic.com/D_NQ_NP_2X_871113-MLA95846257847_102025-F.webp'
+    stockTotal: 4
+    stockReserved: 4
+    isSeed: true
+
+  product_impresora:
+    name: 'Impresora térmica de recibos 80mm'
+    description: 'Impresora térmica para boletas de venta, USB + Ethernet, corte automático.'
+    priceClp: 94990
+    imageUrl: 'https://media.falabella.com/falabellaCL/154345798_01/w=1200,h=1200,fit=pad'
+    stockTotal: 3
+    stockReserved: 0
+    isSeed: true
