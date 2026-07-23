@@ -1,0 +1,45 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# build outputs
+dist/
+build/
+
+# testing
+coverage/
+
+# env files
+.env
+.env.*
+!.env.example
+
+# logs
+*-debug.log*
+.pnpm-debug.log*
+
+# typescript
+*.tsbuildinfo
+
+# caddy (prod volumes)
+caddy_data/
+caddy_config/
+
+# local-only docs and infra config
+infra/
+docs/
+
+# misc
+.DS_Store
+*.pem
+
+# AI assistants / agent tooling
+.claude/
+.claude.json
+CLAUDE.md
+AGENTS.md
+.cursor/
+.cursorrules
+.mcp.json
+.agents/
