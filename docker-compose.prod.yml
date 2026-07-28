@@ -2,7 +2,7 @@
 
 services:
   api:
-    image: ghcr.io/CamiloMH/payments-lab-api:latest
+    image: ghcr.io/camilomh/payments-lab-api:latest
     restart: unless-stopped
     env_file: .env
     environment:
