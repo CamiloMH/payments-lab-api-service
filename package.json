@@ -26,6 +26,8 @@
     "format": "prettier --write \"**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,json,md}\"",
     "release": "bash scripts/release.sh",
+    "deploy": "bash infra/deploy.sh",
+    "release:deploy": "bash infra/release-deploy.sh",
     "prepare": "husky || true"
   },
   "dependencies": {

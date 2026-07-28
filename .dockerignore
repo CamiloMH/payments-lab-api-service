@@ -4,3 +4,5 @@ coverage
 .git
 .env
 *.log
+infra
+docs
