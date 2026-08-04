@@ -9,15 +9,27 @@ import { StockReservationRepository } from '@/stock/repositories/stock-reservati
 import { StockReservationService } from '@/stock/stock-reservation.service';
 import { Product } from '@/products/entities/product.entity';
 import { ProductRepository } from '@/products/repositories/product.repository';
+import { CallbackPivot } from '@/callback-pivots/entities/callback-pivot.entity';
+import { InscribedCard } from '@/cards/entities/inscribed-card.entity';
+import { CartItem } from '@/cart/entities/cart-item.entity';
+import { Cart } from '@/cart/entities/cart.entity';
+import { OrderEvent } from '@/order-events/entities/order-event.entity';
+import { OrderItem } from '@/orders/entities/order-item.entity';
+import { Order } from '@/orders/entities/order.entity';
+import { PaymentTrace } from '@/payment-traces/entities/payment-trace.entity';
+import { PaymentAttempt } from '@/payments/entities/payment-attempt.entity';
+import { DemoSession } from '@/session/entities/demo-session.entity';
 
 config({ path: '.env' });
 
 /**
- * Prueba el caso crítico del diseño contra MariaDB real (requiere
+ * Prueba el caso crítico del diseño contra Postgres real (requiere
  * `docker compose up -d` levantado): con 1 unidad de stock, 2 reservas
  * concurrentes por la misma cantidad deben resolver en exactamente un
- * ganador; el lock pesimista serializa la segunda transacción, que ve el
- * stock ya consumido y falla con `InsufficientStockException`.
+ * ganador; el lock pesimista (`SELECT ... FOR UPDATE`, estándar SQL que
+ * TypeORM emite igual en Postgres que en MySQL) serializa la segunda
+ * transacción, que ve el stock ya consumido y falla con
+ * `InsufficientStockException`.
  */
 describe('Reserva de stock: concurrencia (e2e)', () => {
   let dataSource: DataSource;
@@ -25,13 +37,31 @@ describe('Reserva de stock: concurrencia (e2e)', () => {
 
   beforeAll(async () => {
     dataSource = new DataSource({
-      type: 'mariadb',
+      type: 'postgres',
       host: process.env.DB_HOST ?? 'localhost',
-      port: Number(process.env.DB_PORT ?? 3309),
+      port: Number(process.env.DB_PORT ?? 5432),
       username: process.env.DB_USER ?? 'payments',
       password: process.env.DB_PASSWORD ?? 'payments_pass',
       database: process.env.DB_NAME ?? 'payments_lab',
-      entities: [Product, StockReservation],
+      // El dominio es un solo grafo de relaciones conectado (Product -> DemoSession
+      // -> Cart/Order/InscribedCard -> ...): TypeORM necesita resolver ambos lados
+      // de cada relación al construir los metadatos, aunque este test solo consulte
+      // Product y StockReservation. Se listan todas las entidades, igual que hace
+      // el DataSource de producción (`data-source.ts`) vía su glob.
+      entities: [
+        Product,
+        StockReservation,
+        DemoSession,
+        Cart,
+        CartItem,
+        Order,
+        OrderItem,
+        OrderEvent,
+        InscribedCard,
+        PaymentAttempt,
+        PaymentTrace,
+        CallbackPivot,
+      ],
       synchronize: false,
     });
     await dataSource.initialize();
@@ -51,6 +81,30 @@ describe('Reserva de stock: concurrencia (e2e)', () => {
     await dataSource.destroy();
   });
 
+  /**
+   * `stock_reservations.order_id` tiene FK real contra `orders.id` (y esta,
+   * a su vez, contra `demo_sessions.id`): antes de reservar hace falta una
+   * orden real, no solo un string arbitrario como id.
+   */
+  async function createOrder(id: string): Promise<void> {
+    // Mismo string para sesión y orden: no hay relación entre ambos ids más
+    // allá de que esta orden le pertenece, y `demo_sessions.id` es varchar(21)
+    // igual que `orders.id`, así que reusarlo evita pisar ese límite.
+    const session = await dataSource
+      .getRepository(DemoSession)
+      .save(dataSource.getRepository(DemoSession).create({ id }));
+
+    await dataSource.getRepository(Order).save(
+      dataSource.getRepository(Order).create({
+        id,
+        buyOrder: id,
+        sessionId: session.id,
+        totalClp: 1000,
+        expiresAt: new Date(Date.now() + 60_000),
+      }),
+    );
+  }
+
   it('solo una de dos reservas concurrentes gana la última unidad disponible', async () => {
     const product = await dataSource.getRepository(Product).save(
       dataSource.getRepository(Product).create({
@@ -62,6 +116,9 @@ describe('Reserva de stock: concurrencia (e2e)', () => {
         isSeed: false,
       }),
     );
+
+    await createOrder('order-e2e-a');
+    await createOrder('order-e2e-b');
 
     const results = await Promise.allSettled([
       service.reserveAtomic('order-e2e-a', [{ productId: product.id, quantity: 1 }]),
@@ -100,6 +157,7 @@ describe('Reserva de stock: concurrencia (e2e)', () => {
       }),
     );
 
+    await createOrder('order-e2e-release');
     await service.reserveAtomic('order-e2e-release', [{ productId: product.id, quantity: 2 }]);
     let current = await dataSource
       .getRepository(Product)
