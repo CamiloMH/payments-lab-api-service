@@ -1,7 +1,7 @@
 import type { ValueTransformer } from 'typeorm';
 
 /**
- * TypeORM/mysql2 representan `decimal` como string para no perder precisión.
+ * TypeORM/pg representan `decimal` como string para no perder precisión.
  * Como la única moneda soportada es CLP (sin decimales), este transformer
  * expone montos como `number` en TypeScript truncando cualquier fracción.
  */

@@ -9,7 +9,7 @@ import { RedirectKind } from './redirect-kind.enum';
 import { ReservationStatus } from './reservation-status.enum';
 
 /**
- * Estos valores son el contrato con las columnas `enum(...)` de MariaDB: un
+ * Estos valores son el contrato con los tipos `ENUM` de Postgres: un
  * rename accidental del string rompería la persistencia sin que TypeScript lo
  * detecte (los enums de TS no verifican el valor contra la migración SQL).
  */

@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { TypeOrmConfigService } from './typeorm-config.service';
 
-/** Registra la conexión TypeORM/MariaDB para toda la app vía `TypeOrmConfigService`. */
+/** Registra la conexión TypeORM/Postgres para toda la app vía `TypeOrmConfigService`. */
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

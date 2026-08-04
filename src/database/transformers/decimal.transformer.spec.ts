@@ -17,7 +17,7 @@ describe('decimalTransformer', () => {
   });
 
   describe('from (DB -> JS)', () => {
-    it('convierte el string que devuelve mysql2 a number', () => {
+    it('convierte el string que devuelve pg a number', () => {
       expect(decimalTransformer.from('1990')).toBe(1990);
       expect(decimalTransformer.from('1990.00')).toBe(1990);
     });
