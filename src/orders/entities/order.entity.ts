@@ -68,7 +68,7 @@ export class Order {
   totalClp!: number;
 
   /** Vencimiento de la reserva de stock asociada mientras la orden esté `pending_payment`. */
-  @Column({ name: 'expires_at', type: 'datetime' })
+  @Column({ name: 'expires_at', type: 'timestamp' })
   expiresAt!: Date;
 
   /** Líneas de la orden: snapshot de productos comprados (nombre y precio no cambian si el producto se edita después). */

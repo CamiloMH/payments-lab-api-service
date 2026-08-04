@@ -33,7 +33,7 @@ export class CartItem {
   @JoinColumn({ name: 'product_id' })
   product!: Relation<Product>;
 
-  @Column({ type: 'int', unsigned: true })
+  @Column({ type: 'int' })
   quantity!: number;
 
   @BeforeInsert()

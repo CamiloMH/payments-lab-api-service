@@ -43,11 +43,11 @@ export class Product {
   priceClp!: number;
 
   /** Unidades totales existentes (reservadas + disponibles). */
-  @Column({ name: 'stock_total', type: 'int', unsigned: true })
+  @Column({ name: 'stock_total', type: 'int' })
   stockTotal!: number;
 
   /** Unidades actualmente reservadas por checkouts en curso; solo lo muta `StockReservationService` bajo lock. */
-  @Column({ name: 'stock_reserved', type: 'int', unsigned: true, default: 0 })
+  @Column({ name: 'stock_reserved', type: 'int', default: 0 })
   stockReserved!: number;
 
   @Column({ name: 'image_url', type: 'varchar', length: 500, nullable: true })

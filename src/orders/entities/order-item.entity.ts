@@ -54,7 +54,7 @@ export class OrderItem {
   unitPriceClp!: number;
 
   /** Unidades compradas de este producto. */
-  @Column({ type: 'int', unsigned: true })
+  @Column({ type: 'int' })
   quantity!: number;
 
   @BeforeInsert()

@@ -54,11 +54,11 @@ export class CallbackPivot {
   externalToken!: string | null;
 
   /** Vencimiento del pivot (`PIVOT_TTL_MINUTES` desde su creación). */
-  @Column({ name: 'expires_at', type: 'datetime' })
+  @Column({ name: 'expires_at', type: 'timestamp' })
   expiresAt!: Date;
 
   /** Fecha en que se consumió el pivot; `null` mientras sigue pendiente. Protege contra reprocesar el mismo callback (replay). */
-  @Column({ name: 'consumed_at', type: 'datetime', nullable: true })
+  @Column({ name: 'consumed_at', type: 'timestamp', nullable: true })
   consumedAt!: Date | null;
 
   @BeforeInsert()

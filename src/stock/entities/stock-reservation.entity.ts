@@ -41,7 +41,7 @@ export class StockReservation {
   @JoinColumn({ name: 'product_id' })
   product!: Relation<Product>;
 
-  @Column({ type: 'int', unsigned: true })
+  @Column({ type: 'int' })
   quantity!: number;
 
   /** Estado de la reserva: activa, consumida (orden pagada), liberada (cancelación/fallo) o expirada (TTL). */
@@ -50,14 +50,14 @@ export class StockReservation {
 
   /** Vencimiento de la reserva; el `StockSweepService` usa el índice para encontrar reservas vencidas eficientemente. */
   @Index()
-  @Column({ name: 'expires_at', type: 'datetime' })
+  @Column({ name: 'expires_at', type: 'timestamp' })
   expiresAt!: Date;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
   /** Fecha en que la reserva pasó a `consumed`/`released`/`expired`; `null` mientras sigue `active`. */
-  @Column({ name: 'released_at', type: 'datetime', nullable: true })
+  @Column({ name: 'released_at', type: 'timestamp', nullable: true })
   releasedAt!: Date | null;
 
   @BeforeInsert()
