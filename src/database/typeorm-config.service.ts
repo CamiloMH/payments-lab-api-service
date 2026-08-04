@@ -16,12 +16,21 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
-      type: 'mariadb',
+      type: 'postgres',
       host: this.configService.get<string>('DB_HOST') ?? 'localhost',
-      port: Number(this.configService.get<string>('DB_PORT') ?? 3306),
+      port: Number(this.configService.get<string>('DB_PORT') ?? 5432),
       username: this.configService.get<string>('DB_USER') ?? 'root',
       password: this.configService.get<string>('DB_PASSWORD') ?? '',
       database: this.configService.get<string>('DB_NAME') ?? 'payments_lab',
+      // Neon (y la mayoría de los Postgres administrados) exige TLS y se sirve
+      // detrás de un pooler cuyo certificado no siempre valida en cadena contra
+      // los CA raíz que trae Node; `rejectUnauthorized: false` sigue cifrando la
+      // conexión, solo no verifica esa cadena. Apagado por defecto porque el
+      // Postgres local de `docker-compose.yml` no habla TLS.
+      ssl:
+        this.configService.get<string>('DB_SSL') === 'true'
+          ? { rejectUnauthorized: false }
+          : undefined,
       synchronize: this.configService.get<string>('DB_SYNCHRONIZE') === 'true',
       logging: this.configService.get<string>('DB_LOGGING') === 'true',
       entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],

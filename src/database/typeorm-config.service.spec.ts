@@ -22,7 +22,7 @@ describe('TypeOrmConfigService', () => {
     const options = service.createTypeOrmOptions();
 
     expect(options).toMatchObject({
-      type: 'mariadb',
+      type: 'postgres',
       host: 'db.internal',
       port: 3309,
       username: 'payments',
@@ -45,9 +45,18 @@ describe('TypeOrmConfigService', () => {
 
     expect(service.createTypeOrmOptions()).toMatchObject({
       host: 'localhost',
-      port: 3306,
+      port: 5432,
       logging: false,
       synchronize: false,
+      ssl: undefined,
     });
+  });
+
+  it('activa TLS con rejectUnauthorized false solo cuando DB_SSL es "true"', () => {
+    const on = new TypeOrmConfigService(buildConfigService({ DB_SSL: 'true' }));
+    expect(on.createTypeOrmOptions()).toMatchObject({ ssl: { rejectUnauthorized: false } });
+
+    const off = new TypeOrmConfigService(buildConfigService({ DB_SSL: 'false' }));
+    expect(off.createTypeOrmOptions()).toMatchObject({ ssl: undefined });
   });
 });
