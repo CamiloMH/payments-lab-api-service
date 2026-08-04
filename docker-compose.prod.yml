@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      DB_HOST: mariadb
-      DB_PORT: 3306
+      DB_HOST: postgres
+      DB_PORT: 5432
     mem_limit: 320m
     networks:
       edge:
