@@ -1,23 +1,22 @@
 services:
-  mariadb:
-    image: mariadb:11
-    container_name: payments-lab-api-mariadb
+  postgres:
+    image: postgres:16-alpine
+    container_name: payments-lab-api-postgres
     restart: unless-stopped
     environment:
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpass}
-      MARIADB_DATABASE: ${DB_NAME:-payments_lab}
-      MARIADB_USER: ${DB_USER:-payments}
-      MARIADB_PASSWORD: ${DB_PASSWORD:-payments_pass}
-    # 3309 en el host para no chocar con otros proyectos ni instalaciones locales (3306).
+      POSTGRES_DB: ${DB_NAME:-payments_lab}
+      POSTGRES_USER: ${DB_USER:-payments}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-payments_pass}
+    # 5433 en el host para no chocar con otros proyectos ni instalaciones locales (5432).
     ports:
-      - "${DB_PORT:-3309}:3306"
+      - "${DB_PORT:-5433}:5432"
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-payments} -d ${DB_NAME:-payments_lab}"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  mariadb_data:
+  postgres_data:
