@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, type NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod, type NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DemoSession } from './entities/demo-session.entity';
@@ -18,6 +18,9 @@ const ALL_ROUTES = '{*splat}';
 })
 export class SessionModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(SessionMiddleware).forRoutes(ALL_ROUTES);
+    consumer
+      .apply(SessionMiddleware)
+      .exclude({ path: 'healthz', method: RequestMethod.GET })
+      .forRoutes(ALL_ROUTES);
   }
 }
